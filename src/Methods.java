@@ -1,8 +1,21 @@
+import java.util.*;
 
 public class Methods {
+	private char[][] arr;
+	private char comp, person;
+	private String check = null;
 	
+	public Methods(char[][] not, char comp1, char person1){
+		arr = not;
+		comp = comp1;
+		person = person1;
+	}
+	
+	public String getCheck(){
+		return check;
+	}
 
-	public String checkRow(char[][] arr) {
+	public String checkRow() {
 		String str = "";
 		for (int r = 0; r < arr.length; r++) {
 			for (int c = 0; c < arr[r].length; c++) {
@@ -24,15 +37,16 @@ public class Methods {
 				|| (str.charAt(2) == 'o' && str.charAt(5) == 'o' && str.charAt(8) == 'o')) {
 			return "O player won";
 		}
-		if(str.indexOf(" ") == -1){
+		if (str.indexOf(" ") == -1) {
 			return "Tie";
 		}
 		return null;
 	}
-	//check to see if someone has won game the game. Uses if statements. 
-	public void printArr(char[][] arr){
-		for(char[] x : arr){
-			for(char b : x){
+
+	// check to see if someone has won game the game. Uses if statements.
+	public void printArr() {
+		for (char[] x : arr) {
+			for (char b : x) {
 				String up = "" + b;
 				up = up.toUpperCase();
 				System.out.print(up + " | ");
@@ -41,9 +55,20 @@ public class Methods {
 		}
 	}
 
-	public void playGame(char[][] arr){
+	public void playGame() {
 		double b = Math.random();
-		
+
 	}
+
+	public void input() {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Input row index: ");
+		int r = input.nextInt();
+		System.out.println("Input column index");
+		int c = input.nextInt();
+		arr[r][c] = person;
+	}
+	
+	
 	
 }
