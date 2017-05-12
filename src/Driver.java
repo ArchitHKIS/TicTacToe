@@ -18,12 +18,11 @@ public class Driver {
 		if (xoro > 50) {
 			char[][] bobo = { { e, e, e }, { e, e, e }, { e, e, e } };
 			m = new Methods(bobo, x, o);
-			m.playGame();
+			m.playFirstMove();
 		} else {
 			char[][] bobo = { { e, e, e }, { e, e, e }, { e, e, e } };
-			m = new Methods(bobo, o, x);
-			
+			m = new Methods(bobo, o, x);			
 		}
-
+		
 	}
 }

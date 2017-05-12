@@ -4,16 +4,24 @@ public class Methods {
 	private char[][] arr;
 	private char comp, person;
 	private String check = null;
-	
-	public Methods(char[][] not, char comp1, char person1){
+	private int played = 0;
+	// information hiding
+
+	public Methods(char[][] not, char comp1, char person1) {
 		arr = not;
 		comp = comp1;
 		person = person1;
 	}
-	
-	public String getCheck(){
+
+	// constructor for the board that initializes the char array and the 2 char
+	// variables.
+
+	public String getCheck() {
 		return check;
 	}
+
+	// return check will be used in while loop for the main class to see if
+	// someone has won the game yet
 
 	public String checkRow() {
 		String str = "";
@@ -44,6 +52,7 @@ public class Methods {
 	}
 
 	// check to see if someone has won game the game. Uses if statements.
+
 	public void printArr() {
 		for (char[] x : arr) {
 			for (char b : x) {
@@ -55,20 +64,53 @@ public class Methods {
 		}
 	}
 
-	public void playGame() {
-		double b = Math.random();
+	// prints the tic tac toe board using 2 for each loops
 
+	public void playFirstMove() {
+		ArrayList<int[]> rands = new ArrayList<int[]>();
+		rands.add(new int[] {0,0});
+		rands.add(new int[] {2,0});
+		rands.add(new int[] {0,2});
+		rands.add(new int[] {2,2});
+		if (played == 0) {
+			int b = (int) (Math.random()*4);
+			arr[rands.get(b)[0]][rands.get(b)[1]] = comp;
+			played++;
+		}else if (played == 1){
+			boolean corner = false;
+			for(char [] r : arr){
+				for(char c : r){
+					if(c  != ' '){
+						corner = true;
+					}
+				}
+			}
+			if(corner == true){
+				arr[1][1] = comp;
+			}else{
+				int b = (int) (Math.random()*4);
+				arr[rands.get(b)[0]][rands.get(b)[1]] = comp;
+			}
+		}
 	}
 
+	//logic for the first move
+	
 	public void input() {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Input row index: ");
 		int r = input.nextInt();
 		System.out.println("Input column index");
 		int c = input.nextInt();
+		if(arr[r][c] == ' '){
 		arr[r][c] = person;
+		played++;
+		}else{
+			System.out.println("Please enter another index:");
+			input();
+		}
 	}
 	
-	
-	
+	// takes in user input
+
 }
