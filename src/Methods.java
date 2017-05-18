@@ -90,11 +90,110 @@ public class Methods {
 			}else{
 				int b = (int) (Math.random()*4);
 				arr[rands.get(b)[0]][rands.get(b)[1]] = comp;
+				played++;
 			}
 		}
 	}
 
 	//logic for the first move
+	
+	public void play(){
+		String str = toString();
+		boolean winnable = canWin();
+			if(winnable == true){
+				letsWin();
+			}
+		boolean tie = checkTwo();
+		
+	}
+	
+	public boolean checkTwo(){
+		String str = toString();
+		if((str.charAt(6) == person && str.charAt(7) == person && str.charAt(8) == ' ') || (str.charAt(6) == person && str.charAt(8) == person && str.charAt(7) == ' ') || (str.charAt(7) == person && str.charAt(8) == person && str.charAt(6) == ' ')) {
+			return true;
+		} // for one row
+		if((str.charAt(3) == person && str.charAt(4) == person && str.charAt(5) == ' ') || (str.charAt(3) == person && str.charAt(5) == person && str.charAt(4) == ' ') || (str.charAt(4) == person && str.charAt(5) == person && str.charAt(3) == ' ')) {
+			return true;
+		}
+		if((str.charAt(6) == person && str.charAt(4) == person && str.charAt(2) == ' ') || (str.charAt(6) == person && str.charAt(2) == person && str.charAt(4) == ' ') || (str.charAt(4) == person && str.charAt(2) == person && str.charAt(6) == ' ')) {
+			return true;
+		}
+		if((str.charAt(0) == person && str.charAt(4) == person && str.charAt(8) == ' ') || (str.charAt(4) == person && str.charAt(8) == person && str.charAt(0) == ' ') || (str.charAt(8) == person && str.charAt(0) == person && str.charAt(4) == ' ')) {
+			return true;
+		}
+		if((str.charAt(0) == person && str.charAt(1) == person && str.charAt(2) == ' ') || (str.charAt(1) == person && str.charAt(2) == person && str.charAt(0) == ' ') || (str.charAt(0) == person && str.charAt(2) == person && str.charAt(1) == ' ')) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean canWin(){
+		String str = toString();
+		if((str.charAt(6) == comp && str.charAt(7) == comp && str.charAt(8) == ' ') || (str.charAt(6) == comp && str.charAt(8) == comp && str.charAt(7) == ' ') || (str.charAt(7) == comp && str.charAt(8) == comp && str.charAt(6) == ' ')) {
+			return true;
+		} // for one row
+		if((str.charAt(3) == comp && str.charAt(4) == comp && str.charAt(5) == ' ') || (str.charAt(3) == comp && str.charAt(5) == comp && str.charAt(4) == ' ') || (str.charAt(4) == comp && str.charAt(5) == comp && str.charAt(3) == ' ')) {
+			return true;
+		}
+		if((str.charAt(6) == comp && str.charAt(4) == comp && str.charAt(2) == ' ') || (str.charAt(6) == comp && str.charAt(2) == comp && str.charAt(4) == ' ') || (str.charAt(4) == comp && str.charAt(2) == comp && str.charAt(6) == ' ')) {
+			return true;
+		}
+		if((str.charAt(0) == comp && str.charAt(4) == comp && str.charAt(8) == ' ') || (str.charAt(4) == comp && str.charAt(8) == comp && str.charAt(0) == ' ') || (str.charAt(8) == comp && str.charAt(0) == comp && str.charAt(4) == ' ')) {
+			return true;
+		}
+		if((str.charAt(0) == comp && str.charAt(1) == comp && str.charAt(2) == ' ') || (str.charAt(1) == comp && str.charAt(2) == comp && str.charAt(0) == ' ') || (str.charAt(0) == comp && str.charAt(2) == comp && str.charAt(1) == ' ')) {
+			return true;
+		}	
+		return false;
+	}
+	
+	public void letsWin(){
+		String str = toString();
+		if(winHelp(0, 1 ,2, str)) 
+			winHelp(0, 1 ,2, str);
+		else if(winHelp(3, 4 , 5, str)){
+			winHelp(3, 4 , 5, str);
+		}
+		else if(winHelp(6, 7, 8, str)){
+			winHelp(6, 7, 8, str);
+		}
+		else if(winHelp(6, 4, 2, str)){
+			winHelp(6, 4, 2, str);
+		}
+		else if(winHelp(0, 4, 8, str)){
+			winHelp(0, 4, 8, str);
+		}
+	}
+	
+	public void toArr(String str){
+		int d = 0;
+		for(int i = 0; i < arr.length; i++){
+			for(int c = 0; c < arr[i].length; c++){
+				arr[i][c] = str.charAt(d);
+				d++;
+			}
+		}
+	}
+	
+	public boolean winHelp(int i, int c, int d, String str){
+		if(str.charAt(i) == ' ' && str.charAt(c) == comp && str.charAt(d) == comp){
+			str = str.substring(0, i) + comp + str.substring(i+1);
+			toArr(str);
+			return true;
+		}
+		if(str.charAt(c) == ' ' && str.charAt(i) == comp && str.charAt(d) == comp){
+			str = str.substring(0, c) + comp + str.substring(c+1);
+			toArr(str);
+			return true;
+		}
+		if(str.charAt(d) == ' ' && str.charAt(c) == comp && str.charAt(i) == comp){
+			str = str.substring(0, d) + comp + str.substring(d+1);
+			toArr(str);
+			return true;
+		}
+			
+		return false;
+	}
 	
 	public void input() {
 		Scanner input = new Scanner(System.in);
@@ -112,5 +211,15 @@ public class Methods {
 	}
 	
 	// takes in user input
+	
+	public String toString(){
+		String str = "";
+		for (int r = 0; r < arr.length; r++) {
+			for (int c = 0; c < arr[r].length; c++) {
+				str += "" + arr[r][c];
+			}
+		}
+		return str;
+	}
 
 }
