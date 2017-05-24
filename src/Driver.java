@@ -23,6 +23,6 @@ public class Driver {
 			char[][] bobo = { { e, e, e }, { e, e, e }, { e, e, e } };
 			m = new Methods(bobo, o, x);			
 		}
-		
+		System.out.println(m);
 	}
 }
