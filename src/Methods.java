@@ -7,6 +7,7 @@ public class Methods {
 	private int played = 1;
 	private char empty;
 	ArrayList<int[]> rands = new ArrayList<int[]>();
+	ArrayList<int[]> notCorner = new ArrayList<int[]>()
 
 	// information hiding
 
@@ -19,6 +20,11 @@ public class Methods {
 		rands.add(new int[] { 2, 0 });
 		rands.add(new int[] { 0, 2 });
 		rands.add(new int[] { 2, 2 });
+		notCorner.add(new int[] { 0, 1});
+		notCorner.add(new int[] { 1, 0});
+		notCorner.add(new int[] { 1, 1});
+		notCorner.add(new int[] { 1, 2});
+		notCorner.add(new int[] { 2, 1});
 	}
 
 	// constructor for the board that initializes the char array and the 2 char
@@ -280,7 +286,43 @@ public class Methods {
 			return;
 		}
 		if (played == 4) {
-
+			if(canWin()){
+				letsWin();
+				played++;
+				return;
+			}
+			if(checkTwo()){
+				letsBlock();
+				played++;
+				return;
+			}
+			lessRepeat();
+		}
+		if(played == 6){
+			if(canWin()){
+				letsWin();
+				played++;
+				return;
+			}
+			if(checkTwo()){
+				letsBlock();
+				played++;
+				return;
+			}
+				lessRepeat();
+		}
+		if(played == 8){
+			if(canWin()){
+				letsWin();
+				played++;
+				return;
+			}
+			if(checkTwo()){
+				letsBlock();
+				played++;
+				return;
+			}
+				lessRepeat();
 		}
 
 	}
@@ -309,6 +351,30 @@ public class Methods {
 		return new int[] { -1 };
 	}
 
+	public int[] checkPersonCorner() {
+		// ezpz
+		String str = toString();
+		if (str.charAt(0) == person && str.charAt(2) == person) {
+			return new int[] { 6, 8 };
+		}
+		if (str.charAt(0) == person && str.charAt(6) == person) {
+			return new int[] { 2, 8 };
+		}
+		if (str.charAt(0) == person && str.charAt(8) == person) {
+			return new int[] { 2, 6 };
+		}
+		if (str.charAt(2) == person && str.charAt(6) == person) {
+			return new int[] { 0, 8 };
+		}
+		if (str.charAt(2) == person && str.charAt(8) == person) {
+			return new int[] { 0, 6 };
+		}
+		if (str.charAt(6) == person && str.charAt(8) == person) {
+			return new int[] { 0, 2 };
+		}
+		return new int[] { -1 };
+	}
+
 	public void playEven() {
 
 	}
@@ -329,6 +395,18 @@ public class Methods {
 	}
 
 	// takes in user input
+
+	public void lessRepeat() {
+		int r = (int) (Math.random() * notCorner.size());
+			if(arr[notCorner.get(r)[0]][notCorner.get(r)[1]] == empty) {
+				arr[notCorner.get(r)[0]][notCorner.get(r)[1]] = comp;
+				notCorner.remove(r);
+				played++;
+			}else{
+				notCorner.remove(r);
+				playOdd()
+			}
+	}
 
 	public String toString() {
 		String str = "";
