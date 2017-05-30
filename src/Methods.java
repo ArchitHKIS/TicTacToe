@@ -7,7 +7,7 @@ public class Methods {
 	private int played = 1;
 	private char empty;
 	ArrayList<int[]> rands = new ArrayList<int[]>();
-	ArrayList<int[]> notCorner = new ArrayList<int[]>()
+	ArrayList<int[]> notCorner = new ArrayList<int[]>();
 
 	// information hiding
 
@@ -30,8 +30,16 @@ public class Methods {
 	// constructor for the board that initializes the char array and the 2 char
 	// variables.
 
+	public char getComp() {
+		return comp;
+	}
+
 	public String getCheck() {
 		return check;
+	}
+	
+	public int getPlayed(){
+		return played;
 	}
 
 	// return check will be used in while loop for the main class to see if
@@ -76,17 +84,21 @@ public class Methods {
 			}
 			System.out.println("");
 		}
+		System.out.println("");
 	}
 
 	// prints the tic tac toe board using 2 for each loops
 
 	public void playFirstMove() {
-		if (played == 0) {
+		if (played == 1) {
 			int b = (int) (Math.random() * 4);
 			arr[rands.get(b)[0]][rands.get(b)[1]] = comp;
 			rands.remove(b);
 			played++;
-		} else if (played == 1) {
+			return;
+		} 
+		if (played == 2) {
+			input();
 			boolean corner = false;
 			for (char[] r : arr) {
 				for (int i = 0; i < 3; i = i + 2) {
@@ -103,6 +115,7 @@ public class Methods {
 				played++;
 			}
 		}
+		return;
 	}
 
 	// logic for the first move
@@ -274,7 +287,7 @@ public class Methods {
 	// helper method to prevent repetition of code;
 
 	public void playOdd() {
-		if (played == 2) {
+		if (played == 3) {
 			int b = (int) (Math.random() * rands.size());
 			if (arr[rands.get(b)[0]][rands.get(b)[1]] == empty) {
 				arr[rands.get(b)[0]][rands.get(b)[1]] = comp;
@@ -285,7 +298,7 @@ public class Methods {
 			played++;
 			return;
 		}
-		if (played == 4) {
+		if (played == 5 || played == 7 || played == 9) {
 			if(canWin()){
 				letsWin();
 				played++;
@@ -298,33 +311,6 @@ public class Methods {
 			}
 			lessRepeat();
 		}
-		if(played == 6){
-			if(canWin()){
-				letsWin();
-				played++;
-				return;
-			}
-			if(checkTwo()){
-				letsBlock();
-				played++;
-				return;
-			}
-				lessRepeat();
-		}
-		if(played == 8){
-			if(canWin()){
-				letsWin();
-				played++;
-				return;
-			}
-			if(checkTwo()){
-				letsBlock();
-				played++;
-				return;
-			}
-				lessRepeat();
-		}
-
 	}
 
 	public int[] checkCorner() {
@@ -376,8 +362,27 @@ public class Methods {
 	}
 
 	public void playEven() {
+		/*if(played == 2){
+			int[] corner = checkPersonCorner();
+			if(corner[0] != -1){
+				arr[1][1] = comp;
+			}
+		}*/
+		if(played == 4 || played == 6 || played == 8){
+			if(canWin()){
+				letsWin();
+				played++;
+				return;
+			}
+			if(checkTwo()){
+				letsBlock();
+				played++;
+				return;
+			}
+			lessEvenRepeat();
+			}
+		}
 
-	}
 
 	public void input() {
 		Scanner input = new Scanner(System.in);
@@ -404,7 +409,19 @@ public class Methods {
 				played++;
 			}else{
 				notCorner.remove(r);
-				playOdd()
+				playOdd();
+			}
+	}
+
+	public void lessEvenRepeat() {
+		int r = (int) (Math.random() * notCorner.size());
+			if(arr[notCorner.get(r)[0]][notCorner.get(r)[1]] == empty) {
+				arr[notCorner.get(r)[0]][notCorner.get(r)[1]] = comp;
+				notCorner.remove(r);
+				played++;
+			}else{
+				notCorner.remove(r);
+				playEven();
 			}
 	}
 
@@ -417,6 +434,5 @@ public class Methods {
 		}
 		return str;
 	}
-
 	// changes the array to a string
 }
